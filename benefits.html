@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="project.css">
+</head>
+
+<script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+
+<body>
+
+<div class="background">
+	<div class="transbox">
+
+<button class="button button1" onclick="location.href='profits.html';"  style="float: right;">Next: Subsidized Benefit</button>
+
+<h1>Expenditures per Student</h1>
+<p>Oregon ranks 46th in the country in state spending per student in higher education.<sup>1</sup>
+How can residents of Oregon make the most of the limited resources they have available to them?</p>
+
+<svg width=1200 height=820 id="cost"></svg>
+
+<p>Oregon ranks 46th in the country in state spending per student in higher education.<sup>1</sup>
+How can residents of Oregon make the most of the limited resources they have available to them?</p>
+
+<div style="text-align:right; width:100%; padding:0;">
+<button class="button button1" onclick="location.href='profits.html';">Next: Subsidized Benefit</button>
+</div>
+
+
+	</div>
+</div>
+
+<script type="text/javascript">
+
+
+var instnm = [ "Blue Mountain Community College", "Central Oregon Community College", "Chemeketa Community College", "Clackamas Community College", "Clatsop Community College", "Concordia University-Portland", "Eastern Oregon University", "George Fox University", "Lane Community College", "Lewis & Clark College", "Linfield College-McMinnville Campus", "Linn-Benton Community College", "Mount Angel Seminary", "Mt Hood Community College", "Multnomah University", "National University of Natural Medicine", "Northwest Christian University", "Oregon Health & Science University", "Oregon Institute of Technology", "Oregon State University", "University of Oregon", "Pacific Northwest College of Art", "Pacific University", "Portland Community College", "Portland State University", "University of Portland", "Reed College", "Rogue Community College", "Southern Oregon University", "Southwestern Oregon Community College", "Treasure Valley Community College", "Umpqua Community College", "Warner Pacific University", "Corban University", "Western Seminary", "Willamette University", "Western Oregon University", "University of Western States", "Columbia Gorge Community College", "Tillamook Bay Community College", "Oregon Coast Community College", "Klamath Community College", "Linfield College-School of Nursing", "Linfield College-Online and Continuing Education", "Oregon State University-Cascades Campus", "Warner Pacific University Professional and Graduate Studies" ]
+
+
+var inexpfte = [ 6879.0, 7414.0, 6515.0, 9302.0, 8022.0, 3586.0, 7013.0, 10669.0, 11043.0, 15562.0, 14222.0, 9557.0, 13057.0, 6538.0, 6767.0, 14613.0, 4866.0, 76185.0, 9554.0, 11234.0, 15290.0, 17265.0, 12185.0, 7845.0, 9950.0, 12174.0, 24198.0, 6375.0, 7572.0, 6123.0, 8418.0, 8385.0, 10395.0, 3962.0, 8049.0, 14880.0, 9107.0, 7728.0, 7665.0, 4957.0, 11230.0, 6991.0, 11300.0, 9651.0, 3968.0, 6734.0 ]
+
+var tuitfte = [ 4297.0, 2456.0, 2634.0, 5348.0, 2070.0, 14476.0, 7197.0, 18343.0, 8813.0, 24584.0, 20770.0, 3855.0, 17387.0, 3017.0, 10171.0, 24272.0, 10051.0, 27683.0, 7737.0, 12147.0, 17072.0, 20652.0, 24321.0, 3576.0, 9467.0, 22941.0, 33701.0, 5299.0, 6570.0, 2720.0, 5158.0, 2754.0, 16183.0, 11424.0, 13083.0, 23252.0, 7578.0, 21910.0, 5265.0, 1434.0, 5266.0, 5133.0, 16503.0, 14095.0, 4290.0, 10484.0 ]
+
+
+
+function range(start, end) {
+    var ans = [];
+    for (let i = start; i <= end; i++) {
+        ans.push(i);
+    }
+    return ans;
+}
+
+
+var w = 800;
+var h = 800;
+
+var x = d3.scaleLinear().domain([0,Math.max.apply(null, inexpfte)]).range([0,w]);
+var y = d3.scaleBand().domain(range(0,instnm.length)).range([0,h]).padding(0.1);
+var yl = d3.scaleBand().domain(instnm).range([0,h-18]);
+
+
+var margin = 8;
+
+var t = d3.transition()
+		.duration(750)
+		.ease(d3.easeLinear);
+
+var div = d3.select("body").append("div")	
+    .attr("class", "tooltip")				
+    .style("opacity", 0);
+
+var bars = d3.select('#cost')
+	.append('g')
+		.attr("transform", "translate(123,0)")
+	.selectAll("rect")
+	.data(inexpfte)
+	.join("rect")
+       .on("mouseover", function(d) {
+            div.transition()
+               .duration(200)
+               .style("opacity", .9);
+            div.html("$" + d3.format(",.2f")(d) + "/yr")
+               .style("left", (d3.event.pageX + 12) + "px")
+               .style("top", (d3.event.pageY - 8) + "px");
+            })
+        .on("mouseout", function(d) {
+            div.transition()
+                .duration(500)
+                .style("opacity", 0); })
+		.attr('x', 280)
+		.attr('y', function(d,i) {return y(i);})
+		.attr('height', y.bandwidth())
+		.transition()
+			.attr('width', function(d) {return x(d);}).duration(1000)
+		.transition(t)
+			.style("fill", "blue");
+
+d3.select('#cost')
+	.append('g')
+		.attr("transform", "translate(400,0)")
+		.attr("fill", "none")
+		.attr("text-anchor", "end")
+		.style("font-size","14px")
+		.call(d3.axisLeft(yl));
+
+d3.select('#cost')
+	.append('g')
+		.attr("transform", "translate(403, 784)")
+		.attr("fill", "none")
+		.attr("text-anchor", "middle")
+		.style("font-size","14px")
+		.call(d3.axisBottom(x).tickFormat(function(d) { return "$" + d3.format(",.2f")(d); }));
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

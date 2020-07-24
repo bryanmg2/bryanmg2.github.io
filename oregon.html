@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="project.css">
+</head>
+
+
+
+<body>
+
+<div class="background">
+        <div class="transbox">
+<button class="button button1" onclick="location.href='conclusion.html';"  style="float: right;">Next: Conclusion</button>
+
+<h1>Explore the Schools</h1>
+
+<center>
+<svg width=600 height=500>
+</center>
+
+</svg>
+
+
+<div style="text-align:right; width:100%; padding:0;">
+<button class="button button1" onclick="location.href='conclusion.html';">Next: Conclusion</button>
+</div>
+
+
+</div>
+</div>
+
+  <script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+  <script src="https://d3js.org/topojson.v1.min.js"></script>
+<script>
+
+
+var instnm = [ "Blue Mountain Community College", "Central Oregon Community College", "Chemeketa Community College", "Clackamas Community College", "Clatsop Community College", "Concordia University-Portland", "Eastern Oregon University", "George Fox University", "Lane Community College", "Lewis & Clark College", "Linfield College-McMinnville Campus", "Linn-Benton Community College", "Mount Angel Seminary", "Mt Hood Community College", "Multnomah University", "National University of Natural Medicine", "Northwest Christian University", "Oregon Health & Science University", "Oregon Institute of Technology", "Oregon State University", "University of Oregon", "Pacific Northwest College of Art", "Pacific University", "Portland Community College", "Portland State University", "University of Portland", "Reed College", "Rogue Community College", "Southern Oregon University", "Southwestern Oregon Community College", "Treasure Valley Community College", "Umpqua Community College", "Warner Pacific University", "Corban University", "Western Seminary", "Willamette University", "Western Oregon University", "University of Western States", "Columbia Gorge Community College", "Tillamook Bay Community College", "Oregon Coast Community College", "Klamath Community College", "Linfield College-School of Nursing", "Linfield College-Online and Continuing Education", "Oregon State University-Cascades Campus", "Warner Pacific University Professional and Graduate Studies" ]
+
+var city = [ "Pendleton", "Bend", "Salem", "Oregon City", "Astoria", "Portland", "La Grande", "Newberg", "Eugene", "Portland", "McMinnville", "Albany", "Saint Benedict", "Gresham", "Portland", "Portland", "Eugene", "Portland", "Klamath Falls", "Corvallis", "Eugene", "Portland", "Forest Grove", "Portland", "Portland", "Portland", "Portland", "Grants Pass", "Ashland", "Coos Bay", "Ontario", "Roseburg", "Portland", "Salem", "Portland", "Salem", "Monmouth", "Portland", "The Dalles", "Tillamook", "Newport", "Klamath Falls", "Portland", "McMinnville", "Bend", "Portland" ]
+
+var longitude = [ -118.81694399999999, -121.34858500000001, -122.978076, -122.574272, -123.82333899999999, -122.636941, -118.092495, -122.96749399999999, -123.03264399999999, -122.669137, -123.199642, -123.11403, -122.775405, -122.39697199999999, -122.575557, -122.6766, -123.07975400000001, -122.68609599999999, -121.785177, -123.274723, -123.07579199999999, -122.678182, -123.108777, -122.730876, -122.68628899999999, -122.72669099999999, -122.630348, -123.39326000000001, -122.695081, -124.25223999999999, -116.97448700000001, -123.332475, -122.59249799999999, -122.961129, -122.606374, -123.03053700000001, -123.23830900000002, -122.525979, -121.190197, -123.813624, -124.046973, -121.69885500000001, -122.697773, -123.19963700000001, -121.333703, -122.56253000000001 ]
+
+var latitude = [ 45.677313, 44.071401, 44.978654999999996, 45.323184999999995, 46.183107, 45.570197, 45.319795, 45.303629, 44.009325, 45.450882, 45.201173, 44.587663, 45.057871, 45.514862, 45.527139, 45.501931, 44.047483, 45.498771999999995, 42.257152000000005, 44.56395, 44.045146, 45.526765999999995, 45.521394, 45.438154, 45.511601, 45.572724, 45.480959000000006, 42.412159, 42.185077, 43.395327, 44.020811, 43.289317, 45.506265, 44.882399, 45.512091, 44.935457, 44.852235, 45.543253, 45.590724, 45.456603, 44.603136, 42.195028, 45.531476, 45.201147999999996, 44.042795, 45.503764000000004 ]
+
+var insturl = [ "https://www.bluecc.edu", "www.cocc.edu", "www.chemeketa.edu", "www.clackamas.edu", "www.clatsopcc.edu", "www.cu-portland.edu", "www.eou.edu", "www.georgefox.edu", "https://www.Lanecc.edu", "www.lclark.edu/", "www.linfield.edu", "https://www.linnbenton.edu", "https://www.mountangelabbey.org/seminary", "www.mhcc.edu", "https://www.multnomah.edu", "www.nunm.edu", "www.nwcu.edu/", "www.ohsu.edu", "https://www.oit.edu", "https://oregonstate.edu", "https://www.uoregon.edu", "pnca.edu", "https://www.pacificu.edu", "www.pcc.edu", "www.pdx.edu", "https://www.up.edu", "https://www.reed.edu", "www.roguecc.edu", "www.sou.edu", "www.socc.edu", "www.tvcc.cc", "https://www.umpqua.edu/", "www.warnerpacific.edu/", "www.corban.edu", "www.westernseminary.edu", "www.willamette.edu", "www.wou.edu", "https://www.uws.edu/", "www.cgcc.edu", "tillamookbaycc.edu/", "www.oregoncoastcc.org", "https://www.klamathcc.edu", "https://www.linfield.edu/portland.html", "https://www.linfield.edu/dce.html", "https://osucascades.edu", "www.warnerpacific.edu/" ]
+
+var inexpfte = [ 6879.0, 7414.0, 6515.0, 9302.0, 8022.0, 3586.0, 7013.0, 10669.0, 11043.0, 15562.0, 14222.0, 9557.0, 13057.0, 6538.0, 6767.0, 14613.0, 4866.0, 76185.0, 9554.0, 11234.0, 15290.0, 17265.0, 12185.0, 7845.0, 9950.0, 12174.0, 24198.0, 6375.0, 7572.0, 6123.0, 8418.0, 8385.0, 10395.0, 3962.0, 8049.0, 14880.0, 9107.0, 7728.0, 7665.0, 4957.0, 11230.0, 6991.0, 11300.0, 9651.0, 3968.0, 6734.0 ]
+
+var tuitfte = [ 4297.0, 2456.0, 2634.0, 5348.0, 2070.0, 14476.0, 7197.0, 18343.0, 8813.0, 24584.0, 20770.0, 3855.0, 17387.0, 3017.0, 10171.0, 24272.0, 10051.0, 27683.0, 7737.0, 12147.0, 17072.0, 20652.0, 24321.0, 3576.0, 9467.0, 22941.0, 33701.0, 5299.0, 6570.0, 2720.0, 5158.0, 2754.0, 16183.0, 11424.0, 13083.0, 23252.0, 7578.0, 21910.0, 5265.0, 1434.0, 5266.0, 5133.0, 16503.0, 14095.0, 4290.0, 10484.0 ]
+
+var v = inexpfte.map((n, i) => n - tuitfte[i]);
+
+
+// var map_data = { 'instnm': instnm, 'city': city, 'longitude': longitude, 'latitude': latitude, 'insturl': insturl };
+
+// var map_data = { "children": [] }
+var map_data = [];
+
+for (index = 0; index < instnm.length; index++) { 
+    if (v[index] > 0) {
+    map_data.push({
+	'instnm': instnm[index],
+	'insturl': insturl[index],
+	'city': city[index],
+	'longitude': longitude[index],
+	'latitude': latitude[index] }
+	);
+    }
+} 
+
+console.log(map_data);
+
+var width = 600,
+    height = 500,
+    centered;
+
+var projection =  d3.geoAlbersUsa()
+    .scale(5000)
+    .translate([width + 1175 , height + 420]);
+
+var path = d3.geoPath()
+    .projection(projection);
+
+// var svg = d3.select("body").append("svg")
+//     .attr("width", width)
+//     .attr("height", height);
+
+var svg = d3.select("svg");
+
+var group1 = svg.append("g");
+
+group1.append("rect")
+    .attr("width", "100%")
+    .attr("height", "100%")
+    .attr("fill", "white");
+
+
+var group2 = svg.append("g");
+
+d3.json("us-counties-github.json",function(json){
+  console.log(json);
+
+
+    group2.selectAll("path").append('g')
+       .attr("id", "state_fips")
+       .data(topojson.feature(json, json.objects.collection).features.filter(function(d) { return d.properties.state_fips == 41 }))
+       .enter()
+       .append("path")
+       .attr("d", path)
+       .attr("stroke","white")
+       .attr("fill", "#69b3a2");
+
+    });
+
+
+// svg.exit().append("circle").attr("r",5).attr("transform", function() {return "translate(" + projection([-122,45]) + ")";});
+
+var div = d3.select("body").append("div")
+    .attr("class", "tooltip2")
+    .style("opacity", 0);
+
+
+var group3 = svg.append("g");
+
+group3.selectAll("circles.points")
+.data(map_data)
+.enter()
+.append("circle")
+.attr("r",4)
+.attr("transform", function(d) {return "translate(" + projection([d.longitude,d.latitude]) + ")";})
+       .on("mouseover", function(d) {
+            div.transition()
+               .duration(200)
+               .style("opacity", .9);
+            div.html('<u>' + d.city + ', OR</u><br>' + d.instnm + "<br>https://" + d.insturl)
+               .style("left", (d3.event.pageX + 12) + "px")
+               .style("top", (d3.event.pageY - 8) + "px");
+            });
+
+</script>

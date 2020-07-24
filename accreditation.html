@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="project.css">
+</head>
+
+<script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+<body>
+
+<div class="background">
+	<div class="transbox">
+
+<button class="button button1" onclick="location.href='costs.html';"  style="float: right;">Next: Costs</button>
+
+
+
+<h1>Accreditation</h1>
+<p>"Accreditation is the act of granting credit or recognition, especially to an educational institution that maintains suitable standards. Accreditation is necessary to any person or institution in education that needs to prove that they meet a general standard of quality."<sup>1</sup></p>
+
+<p>Accreditation in higher education is regional. The body that grants accreditation to colleges and universities in Oregon is the Northwest Commission on Colleges and Universities. It's reasonable to conclude that this is the appropriate body to trust because all of the major insitutions of higher education in this region -- University of Washington, Brigham Young University, Oregon State University, Reed College, etc. -- are  accreditted through that body. Prospective students and their families can reasonably conclude that other insitutions thusly accreditted meet the same general standards of quality as the colleges and universities they already know have a good reputation in their communities whether from personal experience or community outreach.</p>
+
+<p>Shockingly, of the 79 institutions of higher education in Oregon, only <b>46</b> are properly accredited by the Northwest Commission on Colleges and Universities:</p>
+
+<center>
+<div id="my_dataviz"></div>
+</center>
+
+<p>Now that we have narrowed down the list of candidate schools from 79 to 46, the next thing to think about is the cost.</p>
+
+
+</p>
+
+<div style="text-align:right; width:100%; padding:0;">
+<button class="button button1" onclick="location.href='costs.html';">Next: Costs</button>
+</div>
+
+
+
+
+
+	</div>
+</div>
+
+<script>
+
+// set the dimensions and margins of the graph
+var width = 780
+    height = 780
+    margin = 20
+
+// The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+var radius = Math.min(width, height) / 2 - margin
+
+// append the svg object to the div called 'my_dataviz'
+var svg = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+// Create dummy data
+var data = {'Northwest Commission on Colleges and Universities': 46, 'Other': 33}
+
+// set the color scale
+var color = d3.scaleOrdinal()
+  .domain(data)
+  .range(d3.schemeSet2);
+
+// Compute the position of each group on the pie:
+var pie = d3.pie()
+
+  .value(function(d) {return d.value; })
+var data_ready = pie(d3.entries(data))
+// Now I know that group A goes from 0 degrees to x degrees and so on.
+
+// shape helper to build arcs:
+var arcGenerator = d3.arc()
+  .innerRadius(0)
+  .outerRadius(radius)
+            .startAngle(function(d) { return d.startAngle + Math.PI*3; })
+            .endAngle(function(d) { return d.endAngle + Math.PI*3; });
+
+
+// Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+svg
+  .selectAll('mySlices')
+  .data(data_ready)
+  .enter()
+  .append('path')
+    .attr('d', arcGenerator)
+    .attr('fill', function(d){ return(color(d.data.key)) })
+    .attr("stroke", "black")
+    .style("stroke-width", "2px")
+    .style("opacity", 0.9)
+
+// Now add the annotation. Use the centroid method to get the best coordinates
+svg
+  .selectAll('mySlices')
+  .data(data_ready)
+  .enter()
+  .append('text')
+  .text(function(d){ return d.data.key})
+  .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
+  .style("text-anchor", "middle")
+  .style("font-size", 15)
+
+svg
+  .selectAll('mySlices')
+  .data(data_ready)
+  .enter()
+  .append('text')
+  .text(function(d){ return d.data.value})
+  .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
+  .attr("dy", +70)
+  .style("text-anchor", "middle")
+  .style("font-size", 50)
+  .style("font-weight", "bold")
+
+
+
+
+
+</script>
+
+<sup>1</sup> https://www.vocabulary.com/dictionary/accreditation<br>
+<sup>2</sup> https://www.nwccu.org/member-institutions/directory/<br>
+
+<br><br>
+</body>
+</html>
