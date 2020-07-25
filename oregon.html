@@ -76,13 +76,13 @@ var color = d3.scaleOrdinal()
 
 console.log(map_data);
 
-var width = 600,
-    height = 500,
+var width = 1000,
+    height = 1000,
     centered;
 
 var projection =  d3.geoAlbersUsa()
-    .scale(5000)
-    .translate([width + 1175 , height + 420]);
+    .scale(8000)
+    .translate([width + 2175 , height + 420]);
 
 var path = d3.geoPath()
     .projection(projection);
@@ -90,12 +90,12 @@ var path = d3.geoPath()
 
 var svg = d3.select("svg");
 
-// var group1 = svg.append("g");
+ var group1 = svg.append("g");
 
-// group1.append("rect")
-//    .attr("width", "100%")
-//    .attr("height", "100%")
-//    .attr("fill", "white");
+ group1.append("rect")
+    .attr("width", "100%")
+    .attr("height", "100%")
+    .attr("fill", "pink");
 
 
 var group2 = svg.append("g");
