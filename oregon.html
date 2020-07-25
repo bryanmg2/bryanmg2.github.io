@@ -90,12 +90,12 @@ var path = d3.geoPath()
 
 var svg = d3.select("svg");
 
-var group1 = svg.append("g");
+// var group1 = svg.append("g");
 
-group1.append("rect")
-    .attr("width", "100%")
-    .attr("height", "100%")
-    .attr("fill", "white");
+// group1.append("rect")
+//    .attr("width", "100%")
+//    .attr("height", "100%")
+//    .attr("fill", "white");
 
 
 var group2 = svg.append("g");
@@ -110,7 +110,7 @@ d3.json("us-counties-github.json",function(json){
        .enter()
        .append("path")
        .attr("d", path)
-       .attr("stroke","white")
+       .attr("stroke","#D3E5CD")
        .attr("fill", "#D7FFCA");
 
     });
