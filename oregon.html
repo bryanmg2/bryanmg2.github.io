@@ -15,39 +15,53 @@
 <h1>Explore the Schools</h1>
 
 <center>
-<svg width=600 height=500>
+<svg width=910 height=775>
 </center>
 
 </svg>
-
 
 <div style="text-align:right; width:100%; padding:0;">
 <button class="button button1" onclick="location.href='degrees.html';">Next: Degrees</button>
 </div>
 
+<p>Data is latest available (07/2020) from https://collegescorecard.ed.gov/data/documentation/</p>
 
 </div>
 </div>
 
-  <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
-  <script src="https://d3js.org/topojson.v1.min.js"></script>
-  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+<script src="https://d3js.org/topojson.v1.min.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <script>
+
+var ugds = [ 1330, 4564, 8514, 5187, 585, 1468, 2587, 2669, 6607, 2011, 1343, 5516, 40, 5311, 403, 32, 555, 782, 3558, 24787, 18923, 448, 1820, 24404, 18541, 3757, 1456, 4216, 4048, 1391, 1350, 2255, 363, 970, 0, 1623, 4552, 0, 670, 263, 409, 1028, 335, 244, 946, 321 ]
+
+
+var age_entry = [ 25.290578888000002, 25.382158161, 25.069875150999998, 25.782931354000002, 26.781176471, 25.148501361999998, 26.522085445, 22.652242329, 25.576447303000002, 19.694256757, 23.990541701999998, 24.524225229000002, NaN, 26.226031215, 24.089361701999998, 27.916666666999998, 27.915254237, 30.191679049, 26.304408676999998, 23.684235129, 21.175438596, 21.957219250999998, 21.542046606, 26.571973163000003, 25.953321576, 20.026041667, 19.426630435, 27.354619565, 24.490536278, 23.540892193, 25.30976431, 26.485634846999996, 28.621848739, 20.529739777, NaN, 19.50229709, 22.3541013, 30.287878788, 25.944844125, 27.151041666999998, 26.571973163000003, 27.487028302, 23.990541701999998, 23.990541701999998, 23.684235129, 28.621848739 ]
+
+var first_gen = [ 0.5006896552000001, 0.393659181, 0.487960688, 0.4563065002, 0.5268817204, 0.37817638270000004, 0.46485623, 0.27563025210000003, 0.41843971630000004, 0.173380035, 0.3032258065, 0.4001996008, NaN, 0.48131793479999996, 0.33789954340000006, NaN, 0.34769230770000004, 0.3155416013, 0.3946564885, 0.31369606, 0.2844585749, 0.1796407186, 0.2857142857, 0.4399602745, 0.391093011, 0.1792792793, NaN, 0.5263793797999999, 0.4037692747, 0.4744680851, 0.4815184815, 0.4850498339, 0.4658869396, 0.22524271839999999, NaN, 0.192, 0.4193877551, NaN, 0.5621301775, 0.4901960784, 0.4399602745, 0.5029325513, 0.3032258065, 0.3032258065, 0.31369606, 0.4658869396 ]
+
+var debt_mdn = [ 8001.0, 8242.0, 8000.0, 7062.0, 6417.0, 12000.0, 14527.0, 19500.0, 7125.0, 17480.0, 22026.0, 6500.0, NaN, 6385.0, 14988.0, NaN, 15000.0, 16625.0, 15452.0, 17000.0, 15895.0, 16517.0, 18907.0, 9121.0, 16500.0, 20500.0, 11298.0, 9750.0, 14499.0, 7904.0, 9500.0, 5708.0, 23000.0, 18575.0, NaN, 19500.0, 15000.0, 7875.0, 9500.0, 4560.0, 9121.0, 7864.0, 22026.0, 22026.0, 17000.0, 23000.0 ]
+
+var grad_debt_mdn = [ 15334.0, 16884.0, 13796.0, 12820.0, 10046.0, 19791.0, 20917.0, 24250.0, 14390.0, 21500.0, 25000.0, 12101.0, NaN, 12513.0, 21633.0, NaN, 21787.0, 16625.0, 22334.0, 22500.0, 20767.0, 27000.0, 25000.0, 15700.0, 21426.0, 25000.0, 13465.0, 17375.0, 20629.0, 12000.0, 12750.0, 8475.0, 27000.0, 24763.0, NaN, 24491.0, 24000.0, 11838.0, 13499.0, 10844.0, 15700.0, 13425.0, 25000.0, 25000.0, 22500.0, 27000.0 ]
+
 
 
 var instnm = [ "Blue Mountain Community College", "Central Oregon Community College", "Chemeketa Community College", "Clackamas Community College", "Clatsop Community College", "Concordia University-Portland", "Eastern Oregon University", "George Fox University", "Lane Community College", "Lewis & Clark College", "Linfield College-McMinnville Campus", "Linn-Benton Community College", "Mount Angel Seminary", "Mt Hood Community College", "Multnomah University", "National University of Natural Medicine", "Northwest Christian University", "Oregon Health & Science University", "Oregon Institute of Technology", "Oregon State University", "University of Oregon", "Pacific Northwest College of Art", "Pacific University", "Portland Community College", "Portland State University", "University of Portland", "Reed College", "Rogue Community College", "Southern Oregon University", "Southwestern Oregon Community College", "Treasure Valley Community College", "Umpqua Community College", "Warner Pacific University", "Corban University", "Western Seminary", "Willamette University", "Western Oregon University", "University of Western States", "Columbia Gorge Community College", "Tillamook Bay Community College", "Oregon Coast Community College", "Klamath Community College", "Linfield College-School of Nursing", "Linfield College-Online and Continuing Education", "Oregon State University-Cascades Campus", "Warner Pacific University Professional and Graduate Studies" ]
 
 var city = [ "Pendleton", "Bend", "Salem", "Oregon City", "Astoria", "Portland", "La Grande", "Newberg", "Eugene", "Portland", "McMinnville", "Albany", "Saint Benedict", "Gresham", "Portland", "Portland", "Eugene", "Portland", "Klamath Falls", "Corvallis", "Eugene", "Portland", "Forest Grove", "Portland", "Portland", "Portland", "Portland", "Grants Pass", "Ashland", "Coos Bay", "Ontario", "Roseburg", "Portland", "Salem", "Portland", "Salem", "Monmouth", "Portland", "The Dalles", "Tillamook", "Newport", "Klamath Falls", "Portland", "McMinnville", "Bend", "Portland" ]
 
-var longitude = [ -118.81694399999999, -121.34858500000001, -122.978076, -122.574272, -123.82333899999999, -122.636941, -118.092495, -122.96749399999999, -123.03264399999999, -122.669137, -123.199642, -123.11403, -122.775405, -122.39697199999999, -122.575557, -122.6766, -123.07975400000001, -122.68609599999999, -121.785177, -123.274723, -123.07579199999999, -122.678182, -123.108777, -122.730876, -122.68628899999999, -122.72669099999999, -122.630348, -123.39326000000001, -122.695081, -124.25223999999999, -116.97448700000001, -123.332475, -122.59249799999999, -122.961129, -122.606374, -123.03053700000001, -123.23830900000002, -122.525979, -121.190197, -123.813624, -124.046973, -121.69885500000001, -122.697773, -123.19963700000001, -121.333703, -122.56253000000001 ]
+var longitude = [ -118.81694399999999, -121.34858500000001, -122.978076, -122.574272, -123.82333899999999, -122.636941, -118.092495, -122.96749399999999, -123.03264399999999, -122.669137, -123.199642, -123.11403, -122.775405, -122.39697199999999, -122.575557, -122.6766, -123.07975400000001, -122.68609599999999, -121.785177, -123.274723, -123.07579199999999, -122.678182, -123.108777, -122.730876, -122.786, -122.72669099999999, -122.630348, -123.39326000000001, -122.695081, -124.25223999999999, -116.97448700000001, -123.332475, -122.59249799999999, -122.961129, -122.606374, -123.03053700000001, -123.23830900000002, -122.525979, -121.190197, -123.813624, -124.046973, -121.69885500000001, -122.697773, -123.19963700000001, -121.333703, -122.56253000000001 ]
 
-var latitude = [ 45.677313, 44.071401, 44.978654999999996, 45.323184999999995, 46.183107, 45.570197, 45.319795, 45.303629, 44.009325, 45.450882, 45.201173, 44.587663, 45.057871, 45.514862, 45.527139, 45.501931, 44.047483, 45.498771999999995, 42.257152000000005, 44.56395, 44.045146, 45.526765999999995, 45.521394, 45.438154, 45.511601, 45.572724, 45.480959000000006, 42.412159, 42.185077, 43.395327, 44.020811, 43.289317, 45.506265, 44.882399, 45.512091, 44.935457, 44.852235, 45.543253, 45.590724, 45.456603, 44.603136, 42.195028, 45.531476, 45.201147999999996, 44.042795, 45.503764000000004 ]
+var latitude = [ 45.677313, 44.071401, 44.978654999999996, 45.323184999999995, 46.183107, 45.570197, 45.319795, 45.303629, 44.009325, 45.450882, 45.201173, 44.587663, 45.057871, 45.514862, 45.527139, 45.501931, 44.047483, 45.498771999999995, 42.25, 44.56395, 44.045146, 45.526765999999995, 45.521394, 45.438154, 45.511601, 45.572724, 45.480959000000006, 42.412159, 42.185077, 43.395327, 44.020811, 43.289317, 45.506265, 44.882399, 45.512091, 44.935457, 44.852235, 45.543253, 45.590724, 45.456603, 44.603136, 42.195028, 45.531476, 45.201147999999996, 44.042795, 45.503764000000004 ]
 
 var insturl = [ "https://www.bluecc.edu", "www.cocc.edu", "www.chemeketa.edu", "www.clackamas.edu", "www.clatsopcc.edu", "www.cu-portland.edu", "www.eou.edu", "www.georgefox.edu", "https://www.Lanecc.edu", "www.lclark.edu/", "www.linfield.edu", "https://www.linnbenton.edu", "https://www.mountangelabbey.org/seminary", "www.mhcc.edu", "https://www.multnomah.edu", "www.nunm.edu", "www.nwcu.edu/", "www.ohsu.edu", "https://www.oit.edu", "https://oregonstate.edu", "https://www.uoregon.edu", "pnca.edu", "https://www.pacificu.edu", "www.pcc.edu", "www.pdx.edu", "https://www.up.edu", "https://www.reed.edu", "www.roguecc.edu", "www.sou.edu", "www.socc.edu", "www.tvcc.cc", "https://www.umpqua.edu/", "www.warnerpacific.edu/", "www.corban.edu", "www.westernseminary.edu", "www.willamette.edu", "www.wou.edu", "https://www.uws.edu/", "www.cgcc.edu", "tillamookbaycc.edu/", "www.oregoncoastcc.org", "https://www.klamathcc.edu", "https://www.linfield.edu/portland.html", "https://www.linfield.edu/dce.html", "https://osucascades.edu", "www.warnerpacific.edu/" ]
 
 var inexpfte = [ 6879.0, 7414.0, 6515.0, 9302.0, 8022.0, 3586.0, 7013.0, 10669.0, 11043.0, 15562.0, 14222.0, 9557.0, 13057.0, 6538.0, 6767.0, 14613.0, 4866.0, 76185.0, 9554.0, 11234.0, 15290.0, 17265.0, 12185.0, 7845.0, 9950.0, 12174.0, 24198.0, 6375.0, 7572.0, 6123.0, 8418.0, 8385.0, 10395.0, 3962.0, 8049.0, 14880.0, 9107.0, 7728.0, 7665.0, 4957.0, 11230.0, 6991.0, 11300.0, 9651.0, 3968.0, 6734.0 ]
 
 var tuitfte = [ 4297.0, 2456.0, 2634.0, 5348.0, 2070.0, 14476.0, 7197.0, 18343.0, 8813.0, 24584.0, 20770.0, 3855.0, 17387.0, 3017.0, 10171.0, 24272.0, 10051.0, 27683.0, 7737.0, 12147.0, 17072.0, 20652.0, 24321.0, 3576.0, 9467.0, 22941.0, 33701.0, 5299.0, 6570.0, 2720.0, 5158.0, 2754.0, 16183.0, 11424.0, 13083.0, 23252.0, 7578.0, 21910.0, 5265.0, 1434.0, 5266.0, 5133.0, 16503.0, 14095.0, 4290.0, 10484.0 ]
+
+var median_hh_inc = [ 50011.18, 56553.17, 55952.18, 65540.87, 50323.49, 63433.53, 52895.14, 65616.22, 51937.39, 69786.29, 64098.01, 54115.45, 59323.69, 60728.71, 65799.0, NaN, 52696.79, 60107.13, 52974.7, 60312.67, 62294.9, 63108.93, 64591.02, 62509.96, 62889.32, 67900.72, 71777.6, 47347.91, 54749.32, 47244.52, 48230.77, 47551.8, 63798.34, 61069.68, NaN, 68135.42, 59410.15, 62894.03, 62509.96, 62509.96, 55952.18, 44264.84, 64098.01, 64098.01, 60312.67, NaN ]
 
 var v = inexpfte.map((n, i) => n - tuitfte[i]);
 
@@ -64,7 +78,13 @@ for (index = 0; index < instnm.length; index++) {
 	'insturl': insturl[index],
 	'city': city[index],
 	'longitude': longitude[index],
-	'latitude': latitude[index] }
+	'latitude': latitude[index],
+	'ugds': ugds[index],
+	'median_hh_inc': median_hh_inc[index],
+	'first_gen': first_gen[index],
+	'age_entry': age_entry[index],
+	'debt_mdn': debt_mdn[index],
+	'grad_debt_mdn': grad_debt_mdn[index] }
 	);
     }
 } 
@@ -82,7 +102,7 @@ var width = 1000,
 
 var projection =  d3.geoAlbersUsa()
     .scale(8000)
-    .translate([width + 2175 , height + 420]);
+    .translate([width + 1820, height + 470]);
 
 var path = d3.geoPath()
     .projection(projection);
@@ -95,7 +115,7 @@ var svg = d3.select("svg");
  group1.append("rect")
     .attr("width", "100%")
     .attr("height", "100%")
-    .attr("fill", "pink");
+    .attr("fill", "white");
 
 
 var group2 = svg.append("g");
@@ -129,16 +149,34 @@ group3.selectAll("circles.points")
 .data(map_data)
 .enter()
 .append("circle")
-.attr("r",4)
+.attr("r",6)
 .attr('fill', function(d){ return(color(d.instnm)) })
 .attr("transform", function(d) {return "translate(" + projection([d.longitude,d.latitude]) + ")";})
        .on("mouseover", function(d) {
             div.transition()
                .duration(200)
                .style("opacity", .9);
-            div.html('<u>' + d.city + ', OR</u><br>' + d.instnm + "<br>https://" + d.insturl)
+            div.html(
+"<b>" + d.instnm + "</b><br>" +
+"<a href=https://" + d.insturl + ">https://" + d.insturl + "</a><br>" +
+"<table>" +
+"<tr><td>Location:</td><td>" + d.city + ", OR</td></tr>" + 
+"<tr><td>Number of Undergrads:</td><td>" + d.ugds + "</td></tr>" +
+"<tr><td>Average Age of Entry:</td><td>" + d.age_entry.toFixed(2) + "</td></tr>" +
+"<tr><td>1st Generation Students:</td><td>" + (100 * d.first_gen).toFixed(2) + "%</td></tr>" +
+"<tr><td>Median Household Income:</td><td>$" + d.median_hh_inc + "</td></tr>" +
+"<tr><td>Median debt of Students:</td><td>$" + d.debt_mdn + "</td></tr>" +
+"<tr><td>Median debt of Graduates:</td><td>$" + d.grad_debt_mdn + "</td></tr>" +
+"</table>"
+)
+
                .style("left", (d3.event.pageX + 12) + "px")
                .style("top", (d3.event.pageY - 8) + "px");
             });
 
+
+
 </script>
+
+</body>
+</html>

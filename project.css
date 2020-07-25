@@ -42,11 +42,11 @@ div.tooltip {
 div.tooltip2 {
     position: absolute;
     text-align: left;
-    width: 400px;
-    height: 200px;
+    width: 325px;
+    height: 175px;
     padding: 2px;
     font: 14px sans-serif;
-    background: lightsteelblue;
+    background: white;
     border: 1px;
     border-radius: 8px;
     pointer-events: none;
