@@ -32,6 +32,7 @@
 
   <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
   <script src="https://d3js.org/topojson.v1.min.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <script>
 
 
@@ -68,6 +69,11 @@ for (index = 0; index < instnm.length; index++) {
 	);
     }
 } 
+
+
+var color = d3.scaleOrdinal()
+  .domain(map_data)
+  .range(d3.schemeSet2);
 
 console.log(map_data);
 
@@ -128,6 +134,7 @@ group3.selectAll("circles.points")
 .enter()
 .append("circle")
 .attr("r",4)
+.attr('fill', function(d){ return(color(d.data.key)) })
 .attr("transform", function(d) {return "translate(" + projection([d.longitude,d.latitude]) + ")";})
        .on("mouseover", function(d) {
             div.transition()
