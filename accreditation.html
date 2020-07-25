@@ -47,9 +47,9 @@
 <script>
 
 // set the dimensions and margins of the graph
-var width = 780
-    height = 780
-    margin = 20
+var width = 500
+    height = 500
+    margin = 10
 
 // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
 var radius = Math.min(width, height) / 2 - margin
@@ -63,7 +63,7 @@ var svg = d3.select("#my_dataviz")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
 // Create dummy data
-var data = {'Northwest Commission on Colleges and Universities': 46, 'Other': 33}
+var data = {'NWCCU': 46, 'Other': 33}
 
 // set the color scale
 var color = d3.scaleOrdinal()
@@ -106,7 +106,7 @@ svg
   .text(function(d){ return d.data.key})
   .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
   .style("text-anchor", "middle")
-  .style("font-size", 15)
+  .style("font-size", 16)
 
 svg
   .selectAll('mySlices')
@@ -115,9 +115,9 @@ svg
   .append('text')
   .text(function(d){ return d.data.value})
   .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
-  .attr("dy", +70)
+  .attr("dy", +20)
   .style("text-anchor", "middle")
-  .style("font-size", 50)
+  .style("font-size", 14)
   .style("font-weight", "bold")
 
 
