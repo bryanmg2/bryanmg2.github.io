@@ -109,7 +109,7 @@ svg
   .append('text')
   .text(function(d){ return d.data.value})
   .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
-  .attr("dy", +70)
+  .attr("dy", +20)
   .style("text-anchor", "middle")
   .style("font-size", 14)
   .style("font-weight", "bold")
