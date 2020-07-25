@@ -134,7 +134,7 @@ group3.selectAll("circles.points")
 .enter()
 .append("circle")
 .attr("r",4)
-.attr('fill', function(d){ return(color(d.data.key)) })
+.attr('fill', function(d){ return(color(d.instnm)) })
 .attr("transform", function(d) {return "translate(" + projection([d.longitude,d.latitude]) + ")";})
        .on("mouseover", function(d) {
             div.transition()
