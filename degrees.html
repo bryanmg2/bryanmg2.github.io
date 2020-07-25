@@ -48,9 +48,9 @@
 
 <script>
 
-var width = 780
-    height = 780
-    margin = 20
+var width = 500
+    height = 500
+    margin = 10
 
 var radius = Math.min(width, height) / 2 - margin
 
@@ -104,7 +104,7 @@ svg
   .text(function(d){ return d.data.key})
   .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
   .style("text-anchor", "middle")
-  .style("font-size", 15)
+  .style("font-size", 16)
 
 svg
   .selectAll('mySlices')
@@ -115,7 +115,7 @@ svg
   .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
   .attr("dy", +70)
   .style("text-anchor", "middle")
-  .style("font-size", 50)
+  .style("font-size", 14)
   .style("font-weight", "bold")
 
 
@@ -124,8 +124,6 @@ svg
 
 </script>
 
-<sup>1</sup> https://www.vocabulary.com/dictionary/accreditation<br>
-<sup>2</sup> https://www.nwccu.org/member-institutions/directory/<br>
 
 <br><br>
 </body>
