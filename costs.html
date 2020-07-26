@@ -86,7 +86,7 @@ var bars = d3.select('#cost')
 	.selectAll("rect")
 	.data(tuitfte)
 	.join("rect")
-       .on("mouseover", function(d) {
+	.on("mouseover", function(d) {
             div.transition()
                .duration(200)
                .style("opacity", .9);
@@ -121,12 +121,6 @@ d3.select('#cost')
 		.attr("text-anchor", "middle")
 		.style("font-size","14px")
 		.call(d3.axisBottom(x).tickFormat(function(d) { return "$" + d3.format(",.2f")(d); }));
-
-
-
-
-
-
 
 
 

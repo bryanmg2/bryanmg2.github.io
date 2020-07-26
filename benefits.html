@@ -63,12 +63,12 @@ var yl = d3.scaleBand().domain(instnm).range([0,h-18]);
 var margin = 8;
 
 var t = d3.transition()
-		.duration(750)
-		.ease(d3.easeLinear);
+	.duration(750)
+	.ease(d3.easeLinear);
 
 var div = d3.select("body").append("div")	
-    .attr("class", "tooltip")				
-    .style("opacity", 0);
+	.attr("class", "tooltip")				
+	.style("opacity", 0);
 
 var bars = d3.select('#cost')
 	.append('g')
@@ -76,7 +76,7 @@ var bars = d3.select('#cost')
 	.selectAll("rect")
 	.data(inexpfte)
 	.join("rect")
-       .on("mouseover", function(d) {
+	.on("mouseover", function(d) {
             div.transition()
                .duration(200)
                .style("opacity", .9);
@@ -111,14 +111,6 @@ d3.select('#cost')
 		.attr("text-anchor", "middle")
 		.style("font-size","14px")
 		.call(d3.axisBottom(x).tickFormat(function(d) { return "$" + d3.format(",.2f")(d); }));
-
-
-
-
-
-
-
-
 
 
 </script>
