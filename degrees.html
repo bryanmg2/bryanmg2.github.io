@@ -19,13 +19,6 @@
 
 <h1>2-Year Colleges vs. 4-Year Colleges</h1>
 
-
-<p>Of the 22 institutions of higher education in Oregon that provide subsidized education, only 5 are 4-Year Colleges:</p>
-
-<center>
-<div id="pie_chart"></div>
-</center>
-
 <p>When picking a college, it is important to know what your academic goals are. If you goal is to get a 
 Bachelor's degree -- a pre-requisite for most graduate school programs and an internationally recognized
 credential (Associate degrees are not<sup>1</sup>) -- then, you should have in mind a 4-year school, even
@@ -33,6 +26,12 @@ if you intend to go to a 2-Year college first. The reason is that some 2-Year sc
 arrangements that allow you to transfer to a 4-year school once you've completed a defined series of courses. Even if
 they don't, you still want to be sure the classes you take at a 2-year college will fully transfer to
 the 4-year college.</p>
+
+<p>Of the 22 institutions of higher education in Oregon that provide subsidized education, only 5 are 4-Year Colleges:</p>
+
+<center>
+<div id="pie_chart"></div>
+</center>
 
 <p>Therefore, realistically the choice comes down to 5 schools to consider, each of which is a 4-year college that provides
 subsidized education beyond the money the students and their families will have to spend themselves.</p>
@@ -75,38 +74,55 @@ var pie = d3.pie()
 
 var data_ready = pie(d3.entries(data));
 
-var arcGenerator = d3.arc()
+var arc = d3.arc()
 	.innerRadius(0)
 	.outerRadius(radius)
 		.startAngle(function(d) { return d.startAngle + Math.PI*3; })
 		.endAngle(function(d) { return d.endAngle + Math.PI*3; });
 
+var arcOver = d3.arc()
+        .innerRadius(0)
+        .outerRadius(radius + 5)
+                .startAngle(function(d) { return d.startAngle + Math.PI*3; })
+                .endAngle(function(d) { return d.endAngle + Math.PI*3; });
 
-svg.selectAll('pie_slices')
+
+svg.selectAll('slices')
   .data(data_ready)
   .enter()
   .append('path')
-    .attr('d', arcGenerator)
+    .attr('d', arc)
     .attr('fill', function(d){ return(color(d.data.key)) })
     .attr("stroke", "black")
     .style("stroke-width", "2px")
-    .style("opacity", 0.9);
+    .style("opacity", 0.9)
+      .on("mouseover", function(d) {
+        d3.select(this).transition()
+          .duration(1000)
+          .attr("d", arcOver);
+      })
+      .on("mouseout", function(d) {
+        d3.select(this).transition()
+          .duration(1000)
+          .attr("d", arc);
+      });
 
-svg.selectAll('pie_slices')
+
+svg.selectAll('slices')
 	.data(data_ready)
 	.enter()
 	.append('text')
 		.text(function(d){ return d.data.key})
-		.attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
+		.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")";  })
 		.style("text-anchor", "middle")
 		.style("font-size", 16);
 
-svg.selectAll('pie_slices')
+svg.selectAll('slices')
 	.data(data_ready)
 	.enter()
 	.append('text')
 		.text(function(d){ return d.data.value})
-		.attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")";  })
+		.attr("transform", function(d) { return "translate(" + arc.centroid(d) + ")";  })
 		.attr("dy", +20)
 		.style("text-anchor", "middle")
 		.style("font-size", 14)
