@@ -59,9 +59,10 @@ var radius = Math.min(width, height) / 2 - margin;
 var svg = d3.select("#pie_chart")
 	.append("svg")
 		.attr("width", width)
-		.attr("height", height)
-	.append("g")
-		.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+		.attr("height", height);
+
+var g = svg.append("g")
+	.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
 var data = {'4-year': 5, '2-year': 17};
 
@@ -87,7 +88,7 @@ var arcOver = d3.arc()
                 .endAngle(function(d) { return d.endAngle + Math.PI*3; });
 
 
-svg.selectAll('slices')
+g.selectAll('slices')
   .data(data_ready)
   .enter()
   .append('path')
@@ -108,7 +109,7 @@ svg.selectAll('slices')
       });
 
 
-svg.selectAll('slices')
+g.selectAll('slices')
 	.data(data_ready)
 	.enter()
 	.append('text')
@@ -117,7 +118,7 @@ svg.selectAll('slices')
 		.style("text-anchor", "middle")
 		.style("font-size", 16);
 
-svg.selectAll('slices')
+g.selectAll('slices')
 	.data(data_ready)
 	.enter()
 	.append('text')
@@ -127,6 +128,32 @@ svg.selectAll('slices')
 		.style("text-anchor", "middle")
 		.style("font-size", 14)
 		.style("font-weight", "bold");
+
+
+var annotation = svg.append("g");
+
+annotation.append('line')
+	.style("stroke", "black")
+	.attr("x1", width - 60)
+	.attr("y1", height - 60)
+	.attr("x2", width - 140)
+	.attr("y2", height - 140);
+
+annotation.append('text')
+	.text("Proportion:")
+	.attr("dx", width - 40)
+	.attr("dy", height - 40)
+	.style("text-anchor", "middle")
+	.style("font-size", 14);
+
+annotation.append('text')
+	.text("22%")
+	.attr("dx", width - 25)
+	.attr("dy", height - 25)
+	.style("text-anchor", "middle")
+	.style("font-size", 14)
+	.style("font-weight", "bold");
+
 
 
 
