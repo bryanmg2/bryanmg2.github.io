@@ -173,6 +173,116 @@ group3.selectAll("circles.points")
             });
 
 
+var annotation = svg.append("g");
+
+
+annotation.append('line')
+        .style("stroke", "black")
+        .attr("x1", 0)
+        .attr("y1", 30)
+        .attr("x2", 220)
+        .attr("y2", 30);
+
+annotation.append('text')
+        .text("Astoria")
+        .attr("dx", +4)
+        .attr("dy", +28)
+        .style("font-size", 14);
+
+
+annotation.append('line')
+	.style("stroke", "black")
+	.attr("x1", 0)
+	.attr("y1", 150)
+	.attr("x2", 290)
+	.attr("y2", 150);
+
+annotation.append('text')
+	.text("Portland")
+	.attr("dx", +4)
+	.attr("dy", +148)
+	.style("font-size", 14);
+
+
+annotation.append('line')
+        .style("stroke", "black")
+        .attr("x1", 0)
+        .attr("y1", 215)
+        .attr("x2", 250)
+        .attr("y2", 215);
+
+annotation.append('text')
+        .text("Salem")
+        .attr("dx", +4)
+        .attr("dy", +213)
+        .style("font-size", 14);
+
+annotation.append('line')
+        .style("stroke", "black")
+        .attr("x1", 900)
+        .attr("y1", 215)
+        .attr("x2", 680)
+        .attr("y2", 215);
+
+annotation.append('text')
+        .text("Pendleton")
+        .attr("dx", +834)
+        .attr("dy", +213)
+        .style("font-size", 14);
+
+annotation.append('text')
+	.text("Oregon")
+	.attr("dx", 910 / 2)
+	.attr("dy", 775 / 2)
+	.style("text-anchor", "middle")
+	.style("font-size", 24)
+	.style("font-weight", "bold");
+
+
+annotation.append('text')
+	.text("Eugene")
+	.attr("dx", +4)
+	.attr("dy", +333)
+	.style("font-size", 14);
+
+annotation.append('line')
+	.style("stroke", "black")
+	.attr("x1", 0)
+	.attr("y1", 335)
+	.attr("x2", 210)
+	.attr("y2", 335);
+
+
+annotation.append('text')
+        .text("Bend")
+        .attr("dx", +4)
+        .attr("dy", +368)
+        .style("font-size", 14);
+
+annotation.append('line')
+        .style("stroke", "black")
+        .attr("x1", 0)
+        .attr("y1", 370)
+        .attr("x2", 390)
+        .attr("y2", 370);
+
+
+
+annotation.append('text')
+        .text("Medford")
+        .attr("dx", +4)
+        .attr("dy", +573)
+        .style("font-size", 14);
+
+annotation.append('line')
+        .style("stroke", "black")
+        .attr("x1", 0)
+        .attr("y1", 575)
+        .attr("x2", 165)
+        .attr("y2", 575);
+
+
+
 </script>
 
 </div>
